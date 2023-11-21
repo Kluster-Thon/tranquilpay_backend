@@ -4,7 +4,7 @@ const INFO = (message) => {
 }
 
 const ERROR = (message) => {
-    console.log(message);
+    console.log(`${message} - 💣`);
 }
 
 module.exports = {
