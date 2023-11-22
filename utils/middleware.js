@@ -1,4 +1,5 @@
 const { ERROR, INFO } = require("./logger")
+const { getUserFrom } = require('./requestParser')
 
 const errorHandler = (error, request, response, next) => {
     ERROR(error.message)
@@ -24,12 +25,23 @@ const unknownEndpoint = (request, response) => {
 }
 
 const requestLogger = (request, response, next) => {
-    ERROR(`Method: ${request.method} | Path: ${request.path} | Body: ${JSON.stringify(request.body)}`)
+    INFO(`Method: ${request.method} | Path: ${request.path} | Body: ${JSON.stringify(request.body)}`)
+    next()
+}
+
+const authMiddleware = async (req, res, next) => {
+    const authorizedUser = await getUserFrom(req)
+    if (!authorizedUser) {
+        return res.status(401).send({ message: "Unauthorized, login to continue." })
+    }
+    
+    req.user = authorizedUser
     next()
 }
 
 module.exports = {
     errorHandler,
     unknownEndpoint,
-    requestLogger
+    requestLogger,
+    authMiddleware
 }

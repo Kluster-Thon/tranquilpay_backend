@@ -11,10 +11,11 @@ LoginRouter.post('/', CREATE_USER_RULES, async (req, res) => {
   
   const { email, password } = req.body
 
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email }) 
+
   const passwordCorrect = user === null
     ? false
-    : bcrypt.compare(password, user.passwordHash)
+    : await bcrypt.compare(password, user.passwordHash)
 
   if (!(user && passwordCorrect)) {
     return res.status(401).json({

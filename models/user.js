@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   passwordHash: String,
+  confirmed: Boolean
 })
 
 userSchema.plugin(uniqueValidator)
