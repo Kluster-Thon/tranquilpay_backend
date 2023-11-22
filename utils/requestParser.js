@@ -4,7 +4,8 @@ const User = require("../models/user")
 
 const CREATE_USER_RULES = [
     body('email').notEmpty().isEmail().withMessage('Field is required and should be an email.'),
-    body('password').notEmpty().isString().withMessage('FIeld is required and should be a string.')
+    body('password').notEmpty().isString().withMessage('Field is required and should be a string.'),
+    body('fullName').notEmpty().isString().withMessage('Field is required and should be a string.'),
 ]
 
 const CHANGE_PASSWORD_RULES = [
@@ -18,7 +19,7 @@ const FORGOT_PASSWORD_RULES = [
 ]
 
 const RESET_FORGOT_PASSWORD_RULES = [
-    body('password').notEmpty().isString().withMessage('FIeld is required and should be a string.')
+    body('password').notEmpty().isString().withMessage('Field is required and should be a string.')
 ]
 
 const getUserFrom = async (req) => {

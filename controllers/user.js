@@ -14,7 +14,7 @@ UserRouter.post('/create', CREATE_USER_RULES , async (req, res) => {
 
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-    const { email, password } = req.body
+    const { email, password, fullName } = req.body
 
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS)
     
@@ -23,6 +23,7 @@ UserRouter.post('/create', CREATE_USER_RULES , async (req, res) => {
         const user = new User({
             email,
             passwordHash,
+            fullName,
             confirmed: false
         })
 

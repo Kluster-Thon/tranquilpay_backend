@@ -36,7 +36,7 @@ LoginRouter.post('/', CREATE_USER_RULES, async (req, res) => {
 
   res
     .status(200)
-    .send({ token, email: user.email, businessName: user.businessName })
+    .send({ token, email: user.email, businessName: user.businessName, fullName: user.fullName })
 })
 
 module.exports = LoginRouter
