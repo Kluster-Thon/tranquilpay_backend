@@ -15,7 +15,13 @@ const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true
-  }
+  },
+  clients: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Client'
+    }
+  ]
 })
 
 userSchema.plugin(uniqueValidator)
