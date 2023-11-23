@@ -25,14 +25,14 @@ const unknownEndpoint = (request, response) => {
 }
 
 const requestLogger = (request, response, next) => {
-    INFO(`Method: ${request.method} | Path: ${request.path} | Body: ${JSON.stringify(request.body)}`)
+    INFO(`Method: ${request.method} | Path: ${request.path} ${request.method === 'POST' ? `| ${JSON.stringify(request.body)}` : ''}`);
     next()
 }
 
 const authMiddleware = async (req, res, next) => {
     const authorizedUser = await getUserFrom(req)
     if (!authorizedUser) {
-        return res.status(401).send({ message: "Unauthorized, login to continue." })
+        return res.status(401).send({ error: "Unauthorized, login to continue." })
     }
     
     req.user = authorizedUser

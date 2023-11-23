@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   businessName: {
     type: String,
+    default: ""
   },
   passwordHash: String,
   confirmed: Boolean,

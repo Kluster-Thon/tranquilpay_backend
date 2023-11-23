@@ -15,8 +15,9 @@ const UserRouter = require('./controllers/user')
 
 //Database connection initiation
 const mongoose = require('mongoose')
-const ResetPasswordRouter = require('./controllers/auth')
 const AuthRouter = require('./controllers/auth')
+const ClientRouter = require('./controllers/clients')
+const { getUserFrom } = require('./utils/requestParser')
 mongoose.set("bufferTimeoutMS", 20000)
 
 mongoose.set("strictQuery", false)
@@ -31,16 +32,16 @@ app.use(cors())
 app.use(express.json())
 app.use(requestLogger) //Logger to log request info to the console
 
-//Auth Middleware
-app.use('/api/auth', authMiddleware)
 
 //Routes
 app.use('/api/user', UserRouter)
 app.use('/api/login', LoginRouter)
-app.use('/api/auth', AuthRouter)
+app.use('/api/auth', authMiddleware, AuthRouter)
+app.use('/api/clients', authMiddleware, ClientRouter)
 
 
 app.use(errorHandler) 
 app.use(unknownEndpoint)
+
 
 module.exports = app

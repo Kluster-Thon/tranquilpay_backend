@@ -7,6 +7,10 @@ const clientSchema = new mongoose.Schema({
     },
     email: String,
     phone: String,
+    customer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 const Client = mongoose.model('Client', clientSchema)

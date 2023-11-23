@@ -99,6 +99,10 @@ UserRouter.get('/reset-password/:token', (req, res) => {
 })
 
 UserRouter.post('/reset-password/:token', RESET_FORGOT_PASSWORD_RULES, async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
     const { token } = req.params;
 
     const { password } = req.body
