@@ -68,7 +68,7 @@ UserRouter.post('/forgot-password', FORGOT_PASSWORD_RULES , async (req, res) => 
 
     const exists = await User.findOne({ email })
     if (!exists) {
-        return res.status(401).json({ message: "No account with this email address." })
+        return res.status(401).json({ error: "No account with this email address." })
     }
 
     try {

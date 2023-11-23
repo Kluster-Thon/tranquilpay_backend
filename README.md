@@ -130,6 +130,37 @@ This endpoint allows users to verify their email address, clicking the link make
 }
 ```
 
+## /api/user/forgot-password
+#### Method: POST
+
+Description:
+
+This endpoint allows users to reset their password in the occasion they forget it. It requires an email that exists in the database, else an error is thrown. If successful an email is sent to the email. Since it takes an email the typical email validation rules apply.
+
+#### Response Object
+##### Success 
+
+```bash
+{
+    "message": "Reset password email sent successfully. Please check your email to reset your password."
+}
+```
+
+##### Error
+##### Sample error response for invalid or expired token
+
+```bash
+{
+    "error": "Invalid or expired verification token."
+}
+```
+
+```bash
+{
+    "error": "No account with this email address."
+}
+```
+
 
 
 
