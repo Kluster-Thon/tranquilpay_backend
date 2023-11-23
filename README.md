@@ -3,9 +3,9 @@
 ## Description
 This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 
-## Endpoints
+# Endpoints
 
-### /api/login
+## /api/login
 #### Method: POST
 
 Description:
@@ -42,8 +42,42 @@ This endpoint allows users to log in to their TranquilPay account using their em
 }
 ```
 
-##### Sample error response for invalid input
+##### Sample error response for invalid input (Empty password in this case)
 
+```bash
+{
+    "errors": [
+        {
+            "type": "field",
+            "msg": "Invalid value",
+            "path": "password",
+            "location": "body"
+        },
+        {
+            "type": "field",
+            "msg": "Field is required and should be a string.",
+            "path": "password",
+            "location": "body"
+        }
+    ]
+}
+```
+
+## /api/user/create
+#### Method: POST
+
+Description: This endpoint allows users to create a TranquilPay account using their email, password and full name. Upon successful registration, the API sends a JSON response informing the user their registration is successful and that they have received an email, if the email sending process fails the registration is rolled back.
+
+#### Request Object
+##### Success 
+```bash
+{
+    "message":"Registration successful. Please check your email to verify your account."
+}
+```
+
+##### Error 
+##### Sample error response for empty fullName field
 ```bash
 {
     "errors": [
@@ -60,6 +94,14 @@ This endpoint allows users to log in to their TranquilPay account using their em
             "location": "body"
         }
     ]
+}
+```
+
+##### Sample error response for error creating record or sending email (Appropriate status codes are returned as well)
+
+```bash
+{
+    "error": "Error here",
 }
 ```
 

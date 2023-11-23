@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { APP_URL } = require('./config')
 const { ERROR, INFO } = require('./logger')
 const User = require('../models/user')
+const APP_MAIL = process.env.APP_MAIL
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -38,7 +39,7 @@ const sendVerificationEmail = async (email, userId) => {
     const verificationLink = `${APP_URL}/api/user/verify/${token}`;
 
     const emailOptions = {
-        from: 'biobeledev@gmail.com',
+        from: APP_MAIL,
         to: email,
         subject: 'Verify Your Email Address',
         text: `Please click on the following link to verify your email address: ${verificationLink}`,
@@ -63,7 +64,7 @@ const sendResetPasswordEmail = async (email, userId) => {
     const resetPasswordLink = `${APP_URL}/api/user/reset-password/${token}`
 
     const emailOptions = {
-        from: 'biobeledev@gmail.com',
+        from: APP_MAIL,
         to: email,
         subject: 'Reset Your Password',
         text: `Please click on the following link to reset your password: ${resetPasswordLink}`,

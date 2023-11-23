@@ -38,7 +38,7 @@ UserRouter.post('/create', CREATE_USER_RULES , async (req, res) => {
         // Rollback the transaction if any operation fails
         await User.deleteOne({ email })
 
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ error: error.message })
 
     }
 
