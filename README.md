@@ -105,3 +105,31 @@ Description: This endpoint allows users to create a TranquilPay account using th
 }
 ```
 
+## /api/user/verify/:token
+#### Method: GET
+
+Description:
+
+This endpoint allows users to verify their email address, clicking the link makes a get request to the backend which verifies the status of the token. Upon successful confirmation of the validity of the token a JSON response is sent back that the token is valid.
+
+#### Response Object
+##### Success 
+
+```bash
+{
+    "message": "Hurray! Email verified successfully."
+}
+```
+
+##### Error
+##### Sample error response for invalid or expired token
+
+```bash
+{
+    "error": "Invalid or expired verification token."
+}
+```
+
+
+
+

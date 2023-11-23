@@ -4,7 +4,6 @@ const { sendVerificationEmail, verifyToken, sendResetPasswordEmail } = require('
 const { ERROR, INFO } = require('../utils/logger');
 const { CREATE_USER_RULES, validationResult, FORGOT_PASSWORD_RULES, RESET_FORGOT_PASSWORD_RULES } = require('../utils/requestParser');
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
 const { verifyTokenActive } = require('../utils/tools');
 
 const UserRouter = require('express').Router()
@@ -55,7 +54,7 @@ UserRouter.get('/verify/:token', async (req, res) => {
     } catch (error) {
         ERROR(error);
 
-        res.status(400).send({ message: 'Invalid or expired verification token.' });
+        res.status(400).send({ error: 'Invalid or expired verification token.' });
     }
 
 })
