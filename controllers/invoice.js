@@ -61,4 +61,11 @@ InvoiceRouter.get('/verify/:invoiceNumber', async (req, res) => {
 
 })
 
+InvoiceRouter.get('/fetch-all', async (req, res) => {
+    const transactions = await Invoice.find({ userId: req.user.id })
+
+    res.json({ transactions })
+    
+})
+
 module.exports = InvoiceRouter
