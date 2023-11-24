@@ -36,7 +36,37 @@ const RESET_FORGOT_PASSWORD_RULES = [
 const CREATE_CLIENT_RULE = [
     body('fullName').notEmpty().isString().withMessage('Field is required and should be a string.'),
     body('email').notEmpty().isEmail().withMessage('Field is required and should be an email.'),
-    body('phone').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
+    body('phone').notEmpty().isMobilePhone('any', { strictMode: false }).withMessage('Field is required and should be a number.'),
+]
+
+const CREATE_INVOICE_RULES = [
+    body('dueDate').notEmpty().withMessage('Field is required.').bail().isDate().withMessage('Invalid date format.').isAfter(new Date().toISOString()).withMessage('Date must be in the future.'),
+    body('totalAmount').isNumeric().withMessage('Field is required and must be a number.'),
+    body('clientEmail').isEmail().withMessage('Field should be an email.').bail().notEmpty().withMessage('Field is required and should be an email.'),
+    body('items')
+        .exists()
+        .withMessage('Purchased items field is required.')
+        .bail()
+        .isArray()
+        .withMessage('Purchased items field is required.')
+        .bail()
+        .custom(items => {
+            for (const item of items) {
+                if (!item.name || typeof item.name !== 'string') {
+                    throw new Error('Invalid item name');
+                }
+
+                if (!item.quantity || typeof item.quantity !== 'number' || item.quantity <= 0) {
+                    throw new Error('Invalid item quantity');
+                }
+
+                if (!item.unitPrice || typeof item.unitPrice !== 'number' || item.unitPrice <= 0) {
+                    throw new Error('Invalid item unit price');
+                }
+            }
+
+            return true;
+        })
 ]
 
 const getUserFrom = async (req) => {
@@ -58,5 +88,6 @@ module.exports = {
     RESET_FORGOT_PASSWORD_RULES,
     CREATE_CLIENT_RULE,
     LOGIN_USER_RULES,
-    EDIT_USER_PROFILE
+    EDIT_USER_PROFILE,
+    CREATE_INVOICE_RULES
 }

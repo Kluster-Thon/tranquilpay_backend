@@ -16,13 +16,7 @@ ClientRouter.post('/create', CREATE_CLIENT_RULE, async (req, res) => {
         $or: [
             { fullName: { $exists: true }},
             { email: { $exists: true } },
-            {
-                customer: {
-                    $exists: true,
-                    $ref: 'Client',
-                    $eq: req.user.id
-                }
-            }
+            { customer: req.user.id }
         ]
     }
 
@@ -34,8 +28,8 @@ ClientRouter.post('/create', CREATE_CLIENT_RULE, async (req, res) => {
         const newClient = new Client({
             email,
             fullName,
-            phone
-            // other client properties...
+            phone,
+            customer: req.user.id
         })
 
         // Save the client to the database

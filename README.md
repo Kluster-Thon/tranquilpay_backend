@@ -161,6 +161,3 @@ This endpoint allows users to reset their password in the occasion they forget i
 }
 ```
 
-
-
-

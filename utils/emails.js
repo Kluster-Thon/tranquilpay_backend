@@ -81,6 +81,27 @@ const sendResetPasswordEmail = async (email, userId) => {
     }
 }
 
+const sendInvoiceTo = async (email, invoiceNumber) => {
+    const paymentLink = `${APP_URL}/api/invoice/pay/${invoiceNumber}`
+
+    const emailOptions = {
+        from: APP_MAIL,
+        to: email,
+        subject: 'Payment invoice,',
+        text: `Please click on the following link to make payment: ${paymentLink}`,
+    }
+
+    try {
+        await transporter.sendMail(emailOptions)
+        INFO('Invoice sent successfully!')
+
+        return { message: 'Invoice sent successfully!' }
+    } catch (error) {
+        
+        throw new Error(`Failed to send invoice: ${error.message}`)
+    }
+}
+
 const verifyToken = async (token) => {
     const decodedToken = jwt.verify(token, process.env.SECRET);
     const email = decodedToken.email;
@@ -100,6 +121,7 @@ module.exports = {
     createToken,
     sendVerificationEmail,
     verifyToken,
-    sendResetPasswordEmail
+    sendResetPasswordEmail,
+    sendInvoiceTo
 }
 

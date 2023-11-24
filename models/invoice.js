@@ -7,7 +7,8 @@ const invoiceSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        default: "Unpaid"
     },
     dueDate: {
         type: Date,
@@ -34,6 +35,18 @@ const invoiceSchema = new mongoose.Schema({
     paidAmount: {
         type: Number,
         required: true,
+        default: 0
+    },
+    items: [
+        {
+            "name": String,
+            "quantity": Number,
+            "unitPrice": Number,
+        }
+    ],
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 })
 

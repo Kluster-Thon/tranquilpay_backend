@@ -18,6 +18,7 @@ const mongoose = require('mongoose')
 const AuthRouter = require('./controllers/auth')
 const ClientRouter = require('./controllers/clients')
 const { getUserFrom } = require('./utils/requestParser')
+const InvoiceRouter = require('./controllers/invoice')
 mongoose.set("bufferTimeoutMS", 20000)
 
 mongoose.set("strictQuery", false)
@@ -38,6 +39,7 @@ app.use('/api/user', UserRouter)
 app.use('/api/login', LoginRouter)
 app.use('/api/auth', authMiddleware, AuthRouter)
 app.use('/api/clients', authMiddleware, ClientRouter)
+app.use('/api/invoice', authMiddleware, InvoiceRouter)
 
 
 app.use(errorHandler) 
