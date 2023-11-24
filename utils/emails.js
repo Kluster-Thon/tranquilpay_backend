@@ -87,7 +87,7 @@ const sendInvoiceTo = async (email, invoiceNumber) => {
     const emailOptions = {
         from: APP_MAIL,
         to: email,
-        subject: 'Payment invoice,',
+        subject: 'Payment invoice.',
         text: `Please click on the following link to make payment: ${paymentLink}`,
     }
 

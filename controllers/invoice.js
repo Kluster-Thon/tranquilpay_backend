@@ -55,6 +55,8 @@ InvoiceRouter.get('/verify/:invoiceNumber', async (req, res) => {
 
     if (!invoice) return res.status(400).json({ error: "No such invoice found." })
 
+    if(invoice.status === "Paid") return res.json({ message: "Invoice has been paid." })
+
     res.json({ message: "Invoice found.", invoice })
 
 })
