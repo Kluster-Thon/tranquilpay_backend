@@ -1,7 +1,7 @@
 require('dotenv').config()
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
-const { APP_URL } = require('./config')
+const { APP_URL, FRONTEND_APP_URL } = require('./config')
 const { ERROR, INFO } = require('./logger')
 const User = require('../models/user')
 const APP_MAIL = process.env.APP_MAIL
@@ -82,7 +82,7 @@ const sendResetPasswordEmail = async (email, userId) => {
 }
 
 const sendInvoiceTo = async (email, invoiceNumber) => {
-    const paymentLink = `${APP_URL}/api/invoice/pay/${invoiceNumber}`
+    const paymentLink = `${FRONTEND_APP_URL}/api/invoice/pay/${invoiceNumber}`
 
     const emailOptions = {
         from: APP_MAIL,

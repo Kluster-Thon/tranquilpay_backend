@@ -48,8 +48,15 @@ InvoiceRouter.post('/create', CREATE_INVOICE_RULES, async (req, res) => {
 
 })
 
-InvoiceRouter.get('/pay/:invoiceNumber', async (req, res) => {
-    
+InvoiceRouter.get('/verify/:invoiceNumber', async (req, res) => {
+    const { invoiceNumber } = req.params
+
+    const invoice = await Invoice.findOne({ number: invoiceNumber })
+
+    if (!invoice) return res.status(400).json({ error: "No such invoice found." })
+
+    res.json({ message: "Invoice found.", invoice })
+
 })
 
 module.exports = InvoiceRouter
