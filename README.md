@@ -69,6 +69,16 @@ This endpoint allows users to log in to their TranquilPay account using their em
 Description: This endpoint allows users to create a TranquilPay account using their email, password and full name. Upon successful registration, the API sends a JSON response informing the user their registration is successful and that they have received an email, if the email sending process fails the registration is rolled back.
 
 #### Request Object
+##### Sample of a good req
+
+```bash
+{
+    "email": "someemail@gmail.com",
+    "password": "somepassword",
+    "fullName": "Johnbull Biobele"
+}
+```
+
 ##### Success 
 ```bash
 {
@@ -135,9 +145,17 @@ This endpoint allows users to verify their email address, clicking the link make
 
 Description:
 
-This endpoint allows users to reset their password in the occasion they forget it. It requires an email that exists in the database, else an error is thrown. If successful an email is sent to the email. Since it takes an email the typical email validation rules apply.
+This endpoint allows users to reset their password in the occasion they forget it. It requires an email that exists in the database, else an error response is sent back. If successful an email is sent to the email. Since it takes an email the typical email validation rules apply.
 
 #### Response Object
+##### Sample of a good req
+
+```bash
+{
+    "email": "someemail@gmail.com",
+}
+```
+
 ##### Success 
 
 ```bash
@@ -152,12 +170,6 @@ This endpoint allows users to reset their password in the occasion they forget i
 ```bash
 {
     "error": "Invalid or expired verification token."
-}
-```
-
-```bash
-{
-    "error": "No account with this email address."
 }
 ```
 
