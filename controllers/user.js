@@ -82,39 +82,16 @@ UserRouter.post('/forgot-password', FORGOT_PASSWORD_RULES , async (req, res) => 
     }
 })
 
-UserRouter.get('/reset-password/:token', (req, res) => {
+UserRouter.post('/reset-password', RESET_FORGOT_PASSWORD_RULES, async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-
-    const { token } = req.params
-
-    try {
-        verifyTokenActive(token)
-        res.json({ message: "Token is active." })
-        
-    } catch (error) {
-        res.json({ message: "Token has expired." })
-    }
-})
-
-UserRouter.post('/reset-password/:token', RESET_FORGOT_PASSWORD_RULES, async (req, res) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-
-    const { token } = req.params;
 
     const { password } = req.body
 
     try {
-        const { active, email, error } = verifyTokenActive(token);
 
-        if (!active) {
-            return res.status(401).json({ error: 'Token is not active', details: error });
-        }
-
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: req.user.email });
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -124,7 +101,7 @@ UserRouter.post('/reset-password/:token', RESET_FORGOT_PASSWORD_RULES, async (re
         user.passwordHash = newPasswordHash;
         await user.save();
 
-        return res.json({ message: 'Password reset successfully' });
+        return res.json({ message: 'Password reset successfully!' });
     } catch (error) {
 
         ERROR('Error resetting password:', error.message);

@@ -4,10 +4,14 @@
 This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 
 # Endpoints
-- [/api/login](#login)
+- [/api/login](#login) - Login endpoint.
+- [/api/user/create](#create-user) - Create user endpoint.
+- [/api/user/verify/:token](#verify-email) - Verify email on account creation endpoint.
+- [/api/user/forgot-password](#forgot-password) - Forgot password endpoint.
+- [/api/user/reset-password](#reset-password-post) - Post endpoint for resetting password.
 
-## /api/login
 <a name="login"></a>
+## /api/login
 
 #### Method: POST
 
@@ -66,6 +70,7 @@ This endpoint allows users to log in to their TranquilPay account using their em
 }
 ```
 
+<a name="create-user"></a>
 ## /api/user/create
 #### Method: POST
 
@@ -118,6 +123,8 @@ Description: This endpoint allows users to create a TranquilPay account using th
 }
 ```
 
+<a name="verify-email"></a>
+
 ## /api/user/verify/:token
 #### Method: GET
 
@@ -142,6 +149,7 @@ This endpoint allows users to verify their email address, clicking the link make
     "error": "Invalid or expired verification token."
 }
 ```
+<a name="forgot-password"></a>
 
 ## /api/user/forgot-password
 #### Method: POST
@@ -173,6 +181,42 @@ This endpoint allows users to reset their password in the occasion they forget i
 ```bash
 {
     "error": "Invalid or expired verification token."
+}
+```
+
+
+<a name="reset-password-post"></a>
+
+## /api/user/reset-password
+#### Method: POST
+
+Description:
+
+This endpoint allows users to change their password, they have to remember their current password.  It accepts the current user's password and checks if its corrects and updates, if not sends an appropriate error message.
+
+#### Response Object
+##### Sample of a good req
+
+```bash
+{
+    "password": "existingPassword",
+}
+```
+
+##### Success 
+
+```bash
+{
+    "message": "Password reset successfully!"
+}
+```
+
+##### Error
+##### Sample error response for invalid request
+
+```bash
+{
+    "error": "Internal server error."
 }
 ```
 
