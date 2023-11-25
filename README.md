@@ -12,6 +12,7 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/invoice/create](#invoice-create) - Endpoint for creating an invoice.
 - [/api/invoice/get/:invoiceNumber](#fetch-single-invoice) - Endpoint for returning information about a specific invoice.
 - [/api/invoice/fetch-all](#fetch-user-invoice) - Enpoint for fetching all of a business owners invoice.
+- [/api/invoice/fetch/:clientId](#fetch-client-invoice) - Endpoint for fetching all the transactions of a specific client.
 
 <a name="login"></a>
 ## /api/login
@@ -306,6 +307,41 @@ This endpoint returns information about a single invoice.
 Description:
 
 This endpoint returns all the users invoices.
+
+#### Response Object
+##### Success 
+
+```bash
+{
+    "invoices": [
+        {
+        "number": "wrtvwer",
+        "status": "Unpaid | Paid |Incomplete",
+        "dueDate": "2050-10-30",
+        "clientId": "ervqerqrvqwe",
+        "totalAmount": 4000,
+        paidAmount: 3444,
+        items: [
+            {
+                "name": "Chips",
+                "quantity": 4,
+                "unitPrice": 5
+            }
+        ]
+    }
+    ]",
+}
+```
+
+
+<a name="fetch-client-invoice"></a>
+
+## /api/invoice/fetch/:clientId
+#### Method: GET
+
+Description:
+
+This endpoint returns all the invoices a client is to pay.
 
 #### Response Object
 ##### Success 

@@ -66,4 +66,14 @@ InvoiceRouter.get('/fetch-all', async (req, res) => {
     
 })
 
+InvoiceRouter.get('/fetch/:clientId', async (req, res) => {
+    const { clientId } = req.params
+
+    const invoices = await Invoice.find({ clientId })
+
+    if (!invoices) return res.json({ error: "Client not found." })
+    
+    res.json({ invoices })
+})
+
 module.exports = InvoiceRouter
