@@ -48,23 +48,21 @@ InvoiceRouter.post('/create', CREATE_INVOICE_RULES, async (req, res) => {
 
 })
 
-InvoiceRouter.get('/verify/:invoiceNumber', async (req, res) => {
+InvoiceRouter.get('/get/:invoiceNumber', async (req, res) => {
     const { invoiceNumber } = req.params
 
     const invoice = await Invoice.findOne({ number: invoiceNumber })
 
     if (!invoice) return res.status(400).json({ error: "No such invoice found." })
 
-    if(invoice.status === "Paid") return res.json({ message: "Invoice has been paid." })
-
-    res.json({ message: "Invoice found.", invoice })
+    res.json({ invoice })
 
 })
 
 InvoiceRouter.get('/fetch-all', async (req, res) => {
     const transactions = await Invoice.find({ userId: req.user.id })
 
-    res.json({ transactions })
+    res.json({ invoices: transactions })
     
 })
 

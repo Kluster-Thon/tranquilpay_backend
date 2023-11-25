@@ -36,7 +36,7 @@ const sendVerificationEmail = async (email, userId) => {
     const token = createToken(email, userId)
 
     // Send email with verification link
-    const verificationLink = `${APP_URL}/api/user/verify/${token}`;
+    const verificationLink = `${FRONTEND_APP_URL}/api/user/verify/${token}`;
 
     const emailOptions = {
         from: APP_MAIL,
