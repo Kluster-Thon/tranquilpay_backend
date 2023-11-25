@@ -300,7 +300,7 @@ This endpoint returns information about a single invoice.
 
 <a name="fetch-user-invoice"></a>
 
-## /api/user/forgot-password
+## /api/invoice/fetch-all
 #### Method: GET
 
 Description:
