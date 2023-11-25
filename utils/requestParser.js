@@ -69,6 +69,14 @@ const CREATE_INVOICE_RULES = [
         })
 ]
 
+const CREATE_PRODUCT_RULES = [
+    body('product_name').notEmpty().isString().withMessage('Field is required and should be a string.'),
+    body('unit_price').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
+    body('quantity').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
+    body('revenue').notEmpty().isString().withMessage('Field is requored and should be a number.'),
+    body('percentage_increase').notEmpty().isSNumeric().withMessage('Field is required and should be a number.'),
+]
+
 const getUserFrom = async (req) => {
     const auth = req ? req.headers.authorization : null
 
@@ -89,5 +97,6 @@ module.exports = {
     CREATE_CLIENT_RULE,
     LOGIN_USER_RULES,
     EDIT_USER_PROFILE,
-    CREATE_INVOICE_RULES
+    CREATE_INVOICE_RULES,
+    CREATE_PRODUCT_RULES
 }
