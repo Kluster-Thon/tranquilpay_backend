@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/user');
 const { SALT_ROUNDS } = require('../utils/config');
 const { sendVerificationEmail, verifyToken, sendResetPasswordEmail } = require('../utils/emails');
 const { ERROR, INFO } = require('../utils/logger');
@@ -10,6 +10,7 @@ const UserRouter = require('express').Router()
 
 UserRouter.post('/create', CREATE_USER_RULES , async (req, res) => {
     const errors = validationResult(req);
+    
 
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 

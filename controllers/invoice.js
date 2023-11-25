@@ -1,10 +1,10 @@
 const InvoiceRouter = require('express').Router()
 const { CREATE_INVOICE_RULES, validationResult } = require('../utils/requestParser')
-const Invoice = require('../models/Invoice')
+const Invoice = require('../models/invoice')
 const { createTransactionUUID } = require('../utils/tools')
 const ERROR = require('../utils/logger')
 const { sendInvoiceTo } = require('../utils/emails')
-const Client = require('../models/Clients')
+const Client = require('../models/clients')
 
 InvoiceRouter.post('/create', CREATE_INVOICE_RULES, async (req, res) => {
     const errors = validationResult(req)
