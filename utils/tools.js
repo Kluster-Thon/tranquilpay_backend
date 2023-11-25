@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const { v4 } = require('uuid')
-const Invoice = require("../models/invoice")
+const Invoice = require("../models/Invoice")
 
 
 const verifyTokenActive = (token) => {

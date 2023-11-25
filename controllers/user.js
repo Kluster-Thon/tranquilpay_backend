@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 const { SALT_ROUNDS } = require('../utils/config');
 const { sendVerificationEmail, verifyToken, sendResetPasswordEmail } = require('../utils/emails');
 const { ERROR, INFO } = require('../utils/logger');

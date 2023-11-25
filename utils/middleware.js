@@ -1,5 +1,6 @@
 const { ERROR, INFO } = require("./logger")
 const { getUserFrom } = require('./requestParser')
+require('dotenv').config()
 
 const errorHandler = (error, request, response, next) => {
     ERROR(error.message)
@@ -39,9 +40,22 @@ const authMiddleware = async (req, res, next) => {
     next()
 }
 
+const flutterwaveWebhookMiddleware = async (req, res, next) => {
+    const secretHash = process.env.FLW_SECRET_HASH;
+    const signature = req.headers["verif-hash"];
+
+    if (!signature || (signature !== secretHash)) {
+        // This request isn't from Flutterwave, discard.
+        res.status(401).end();
+    }
+
+    next()
+}
+
 module.exports = {
     errorHandler,
     unknownEndpoint,
     requestLogger,
-    authMiddleware
+    authMiddleware,
+    flutterwaveWebhookMiddleware
 }

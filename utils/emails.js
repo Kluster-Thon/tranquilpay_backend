@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
 const { APP_URL, FRONTEND_APP_URL } = require('./config')
 const { ERROR, INFO } = require('./logger')
-const User = require('../models/user')
+const User = require('../models/User')
 const APP_MAIL = process.env.APP_MAIL
 
 const transporter = nodemailer.createTransport({

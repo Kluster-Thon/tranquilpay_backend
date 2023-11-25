@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
-const User = require("../models/user")
+const User = require("../models/User")
 
 const CREATE_USER_RULES = [
     body('email').notEmpty().isEmail().withMessage('Field is required and should be an email.'),

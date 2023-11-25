@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 const { ERROR, INFO } = require('../utils/logger');
 const bcrypt = require('bcrypt');
 const { CHANGE_PASSWORD_RULES, validationResult, EDIT_USER_PROFILE } = require('../utils/requestParser');

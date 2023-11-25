@@ -1,6 +1,6 @@
 const { CREATE_CLIENT_RULE, validationResult, getUserFrom } = require('../utils/requestParser')
-const Client = require('../models/clients')
-const User = require('../models/user')
+const Client = require('../models/Clients')
+const User = require('../models/User')
 const { ERROR } = require('../utils/logger')
 
 const ClientRouter = require('express').Router()

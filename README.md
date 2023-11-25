@@ -4,8 +4,11 @@
 This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 
 # Endpoints
+- [/api/login](#login)
 
 ## /api/login
+<a name="login"></a>
+
 #### Method: POST
 
 Description:

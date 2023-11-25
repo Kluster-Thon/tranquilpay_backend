@@ -7,7 +7,7 @@ const cors = require('cors')
 //Utilities
 const { MONGODB_URI } = require('./utils/config')
 const { INFO, ERROR } = require('./utils/logger')
-const { errorHandler, unknownEndpoint, requestLogger, authMiddleware } = require('./utils/middleware')
+const { errorHandler, unknownEndpoint, requestLogger, authMiddleware, flutterwaveWebhookMiddleware } = require('./utils/middleware')
 
 //Routers
 const LoginRouter = require('./controllers/login')
@@ -19,6 +19,7 @@ const AuthRouter = require('./controllers/auth')
 const ClientRouter = require('./controllers/clients')
 const { getUserFrom } = require('./utils/requestParser')
 const InvoiceRouter = require('./controllers/invoice')
+const WebhookRouter = require('./controllers/webhook')
 mongoose.set("bufferTimeoutMS", 20000)
 
 mongoose.set("strictQuery", false)
@@ -40,6 +41,7 @@ app.use('/api/login', LoginRouter)
 app.use('/api/auth', authMiddleware, AuthRouter)
 app.use('/api/clients', authMiddleware, ClientRouter)
 app.use('/api/invoice', authMiddleware, InvoiceRouter)
+app.use('/api/webhook', flutterwaveWebhookMiddleware, WebhookRouter)
 
 
 app.use(errorHandler) 
