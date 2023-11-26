@@ -56,6 +56,10 @@ const CREATE_INVOICE_RULES = [
                     throw new Error('Invalid item name');
                 }
 
+                if (!item.product_id || typeof item.product_id !== 'string') {
+                    throw new Error('Invalid product id')
+                }
+
                 if (!item.quantity || typeof item.quantity !== 'number' || item.quantity <= 0) {
                     throw new Error('Invalid item quantity');
                 }

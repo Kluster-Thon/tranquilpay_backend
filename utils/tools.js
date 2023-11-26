@@ -3,6 +3,8 @@ const { v4 } = require('uuid')
 const Invoice = require("../models/invoice")
 const Products = require("../models/products")
 const cron = require('node-cron');
+const Product = require("../models/products");
+const { ERROR } = require("./logger");
 
 
 const verifyTokenActive = (token) => {
@@ -67,8 +69,31 @@ cron.schedule('1 0 * * *', () => {
     }
 });
 
+const verifyProductAvailability = async (product_id, amount) => {
+    try {
+        
+        const product = await Product.findOne({ _id: product_id })
+    
+        if (!product) {
+            ERROR(`Product not found.`)
+            return { error: "Product not found" }
+        }
+    
+        if (amount > product.quantity) {
+            ERROR(`Requested amount greater than product stock, reduce amount requested.`)
+            return { error: "Requested amount greater than product stock, reduce amount requested." }
+        }
+
+        return { success: true }
+    } catch (error) {
+        ERROR(`Error verifying product availability; ${error.message}`)
+        return { error: `Error verifying product availability; ${error.message}` }
+    }
+}
+
 module.exports = {
     verifyTokenActive,
     createTransactionUUID,
+    verifyProductAvailability
     // percentageIncrease
 }

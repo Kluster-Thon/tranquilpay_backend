@@ -1,7 +1,7 @@
 const InvoiceRouter = require('express').Router()
 const { CREATE_INVOICE_RULES, validationResult } = require('../utils/requestParser')
 const Invoice = require('../models/invoice')
-const { createTransactionUUID } = require('../utils/tools')
+const { createTransactionUUID, verifyProductAvailability } = require('../utils/tools')
 const ERROR = require('../utils/logger')
 const { sendInvoiceTo } = require('../utils/emails')
 const Client = require('../models/clients')
@@ -18,6 +18,9 @@ InvoiceRouter.post('/create', CREATE_INVOICE_RULES, async (req, res) => {
     if (!clientExists) return res.status(400).json({
         error: "Client doesn't exist, consider creating one before creating an invoice."
     })
+
+    const { error } = await verifyProductAvailability(items.product_id, items.quantity)
+    if(error) return res.json({ error })
 
     try {
         
