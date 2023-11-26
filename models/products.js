@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
 
 const productSchema = new mongoose.Schema({
     product_name: {
@@ -34,3 +33,7 @@ const productSchema = new mongoose.Schema({
         default: 1
     }
 }, { timestamps: true })
+
+const Product = mongoose.model('Product', productSchema)
+
+module.exports = Product

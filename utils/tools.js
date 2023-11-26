@@ -28,7 +28,14 @@ const createTransactionUUID = async () => {
     return uuid;
 }
 
+function percentageIncrease(oldValue, newValue) {
+    const increaseAmount = newValue - oldValue;
+    const percentageIncrease = (increaseAmount / oldValue) * 100;
+    return percentageIncrease;
+}
+
 module.exports = {
     verifyTokenActive,
     createTransactionUUID,
+    percentageIncrease
 }
