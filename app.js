@@ -18,6 +18,7 @@ const mongoose = require('mongoose')
 const AuthRouter = require('./controllers/auth')
 const ClientRouter = require('./controllers/clients')
 const InvoiceRouter = require('./controllers/invoice')
+const ProductRouter = require('./controllers/products')
 const WebhookRouter = require('./controllers/webhook')
 mongoose.set("bufferTimeoutMS", 20000)
 
@@ -40,6 +41,7 @@ app.use('/api/login', LoginRouter)
 app.use('/api/auth', authMiddleware, AuthRouter)
 app.use('/api/clients', authMiddleware, ClientRouter)
 app.use('/api/invoice', authMiddleware, InvoiceRouter)
+app.use('/api/products', ProductRouter)
 app.use('/api/webhook', flutterwaveWebhookMiddleware, WebhookRouter)
 
 
