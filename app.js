@@ -42,8 +42,7 @@ app.use('/api/login', LoginRouter)
 app.use('/api/auth', authMiddleware, AuthRouter)
 app.use('/api/clients', authMiddleware, ClientRouter)
 app.use('/api/invoice', authMiddleware, InvoiceRouter)
-app.use('/api/products', ProductRouter)
-// app.use('/api/products', authMiddleware, ProductRouter)
+app.use('/api/products', authMiddleware, ProductRouter)
 app.use('/api/webhook', flutterwaveWebhookMiddleware, WebhookRouter)
 
 
