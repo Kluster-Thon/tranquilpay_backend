@@ -72,7 +72,7 @@ InvoiceRouter.get('/fetch-all', async (req, res) => {
 InvoiceRouter.get('/fetch/:clientId', async (req, res) => {
     const { clientId } = req.params
 
-    const invoices = await Invoice.find({ clientId })
+    const invoices = await Invoice.find({ clientId }).populate('clientId')
 
     if (!invoices) return res.json({ error: "Client not found." })
     

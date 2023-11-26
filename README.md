@@ -18,6 +18,7 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/clients/fetch-all](#fetch-clients) - Endpoint for fetching all clients.
 
 <a name="login"></a>
+
 ## /api/login
 
 #### Method: POST
@@ -78,6 +79,7 @@ This endpoint allows users to log in to their TranquilPay account using their em
 ```
 
 <a name="create-user"></a>
+
 ## /api/user/create
 #### Method: POST
 
