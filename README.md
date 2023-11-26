@@ -13,6 +13,7 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/invoice/get/:invoiceNumber](#fetch-single-invoice) - Endpoint for returning information about a specific invoice.
 - [/api/invoice/fetch-all](#fetch-user-invoice) - Enpoint for fetching all of a business owners invoice.
 - [/api/invoice/fetch/:clientId](#fetch-client-invoice) - Endpoint for fetching all the transactions of a specific client.
+- [/api/auth/update-profile](#update-user-profile) - Endpoint for updating user profile.
 
 <a name="login"></a>
 ## /api/login
@@ -26,7 +27,7 @@ This endpoint allows users to log in to their TranquilPay account using their em
 #### Request Body
 ##### Sample of a good req
 
-```bash
+```JSON
 {
     "email": "someemail@gmail.com",
     "password": "somepassword" 
@@ -36,7 +37,7 @@ This endpoint allows users to log in to their TranquilPay account using their em
 #### Response Object
 ##### Success 
 
-```bash
+```JSON
 {
     "token":"eervwerv.....",
     "email":"someemail@gmail.com",
@@ -47,7 +48,7 @@ This endpoint allows users to log in to their TranquilPay account using their em
 
 ##### Error
 ##### Sample error response for wrong password or email
-```bash
+```JSON
 {
     "error": "Invalid email or password"
 }
@@ -55,7 +56,7 @@ This endpoint allows users to log in to their TranquilPay account using their em
 
 ##### Sample error response for invalid input (Empty password in this case)
 
-```bash
+```JSON
 {
     "errors": [
         {
@@ -83,7 +84,7 @@ Description: This endpoint allows users to create a TranquilPay account using th
 #### Request Object
 ##### Sample of a good req
 
-```bash
+```JSON
 {
     "email": "someemail@gmail.com",
     "password": "somepassword",
@@ -92,7 +93,7 @@ Description: This endpoint allows users to create a TranquilPay account using th
 ```
 
 ##### Success 
-```bash
+```JSON
 {
     "message":"Registration successful. Please check your email to verify your account."
 }
@@ -100,7 +101,7 @@ Description: This endpoint allows users to create a TranquilPay account using th
 
 ##### Error 
 ##### Sample error response for empty fullName field
-```bash
+```JSON
 {
     "errors": [
         {
@@ -121,7 +122,7 @@ Description: This endpoint allows users to create a TranquilPay account using th
 
 ##### Sample error response for error creating record or sending email (Appropriate status codes are returned as well)
 
-```bash
+```JSON
 {
     "error": "Error here",
 }
@@ -139,7 +140,7 @@ This endpoint allows users to verify their email address, clicking the link make
 #### Response Object
 ##### Success 
 
-```bash
+```JSON
 {
     "message": "Hurray! Email verified successfully."
 }
@@ -148,7 +149,7 @@ This endpoint allows users to verify their email address, clicking the link make
 ##### Error
 ##### Sample error response for invalid or expired token
 
-```bash
+```JSON
 {
     "error": "Invalid or expired verification token."
 }
@@ -165,7 +166,7 @@ This endpoint allows users to reset their password in the occasion they forget i
 #### Response Object
 ##### Sample of a good req
 
-```bash
+```JSON
 {
     "email": "someemail@gmail.com",
 }
@@ -173,7 +174,7 @@ This endpoint allows users to reset their password in the occasion they forget i
 
 ##### Success 
 
-```bash
+```JSON
 {
     "message": "Reset password email sent successfully. Please check your email to reset your password."
 }
@@ -182,7 +183,7 @@ This endpoint allows users to reset their password in the occasion they forget i
 ##### Error
 ##### Sample error response for invalid or expired token
 
-```bash
+```JSON
 {
     "error": "Invalid or expired verification token."
 }
@@ -201,7 +202,7 @@ This endpoint allows users to change their password, they have to remember their
 #### Response Object
 ##### Sample of a good req
 
-```bash
+```JSON
 {
     "password": "existingPassword",
 }
@@ -209,7 +210,7 @@ This endpoint allows users to change their password, they have to remember their
 
 ##### Success 
 
-```bash
+```JSON
 {
     "message": "Password reset successfully!"
 }
@@ -218,7 +219,7 @@ This endpoint allows users to change their password, they have to remember their
 ##### Error
 ##### Sample error response for invalid request
 
-```bash
+```JSON
 {
     "error": "Internal server error."
 }
@@ -236,7 +237,7 @@ This endpoint allows users to create an invoice containing the details of the in
 #### Response Object
 ##### Sample of a good req
 
-```bash
+```JSON
 {
     "dueDate": "2050-10-20",
     "totalAmount": 4000,
@@ -251,7 +252,7 @@ This endpoint allows users to create an invoice containing the details of the in
 
 ##### Success 
 
-```bash
+```JSON
 {
     "message": "Invoice sent successfully!"
 }
@@ -260,7 +261,7 @@ This endpoint allows users to create an invoice containing the details of the in
 ##### Error
 ##### Sample error response for invalid or expired token
 
-```bash
+```JSON
 {
     "error": "Error creating invoice: `Reason here.`"
 }
@@ -278,7 +279,7 @@ This endpoint returns information about a single invoice.
 #### Response Object
 ##### Success 
 
-```bash
+```JSON
 {
     "invoice": {
         "number": "wrtvwer",
@@ -286,8 +287,8 @@ This endpoint returns information about a single invoice.
         "dueDate": "2050-10-30",
         "clientId": "ervqerqrvqwe",
         "totalAmount": 4000,
-        paidAmount: 3444,
-        items: [
+        "paidAmount": 3444,
+        "items": [
             {
                 "name": "Chips",
                 "quantity": 4,
@@ -311,25 +312,25 @@ This endpoint returns all the users invoices.
 #### Response Object
 ##### Success 
 
-```bash
+```JSON
 {
     "invoices": [
         {
-        "number": "wrtvwer",
-        "status": "Unpaid | Paid |Incomplete",
-        "dueDate": "2050-10-30",
-        "clientId": "ervqerqrvqwe",
-        "totalAmount": 4000,
-        paidAmount: 3444,
-        items: [
-            {
-                "name": "Chips",
-                "quantity": 4,
-                "unitPrice": 5
-            }
-        ]
-    }
-    ]",
+            "number": "wrtvwer",
+            "status": "Unpaid | Paid |Incomplete",
+            "dueDate": "2050-10-30",
+            "clientId": "ervqerqrvqwe",
+            "totalAmount": 4000,
+            "paidAmount": 3444,
+            "items": [
+                {
+                    "name": "Chips",
+                    "quantity": 4,
+                    "unitPrice": 5
+                }
+            ]
+        }
+    ],
 }
 ```
 
@@ -346,24 +347,62 @@ This endpoint returns all the invoices a client is to pay.
 #### Response Object
 ##### Success 
 
-```bash
+```JSON
 {
     "invoices": [
         {
-        "number": "wrtvwer",
-        "status": "Unpaid | Paid |Incomplete",
-        "dueDate": "2050-10-30",
-        "clientId": "ervqerqrvqwe",
-        "totalAmount": 4000,
-        paidAmount: 3444,
-        items: [
-            {
-                "name": "Chips",
-                "quantity": 4,
-                "unitPrice": 5
-            }
-        ]
-    }
-    ]",
+            "number": "wrtvwer",
+            "status": "Unpaid | Paid |Incomplete",
+            "dueDate": "2050-10-30",
+            "clientId": "ervqerqrvqwe",
+            "totalAmount": 4000,
+            "paidAmount": 3444,
+            "items": [
+                {
+                    "name": "Chips",
+                    "quantity": 4,
+                    "unitPrice": 5
+                }
+            ]
+        }
+    ],
 }
 ```
+
+
+<a name="update-user-profile"></a>
+
+## /api/auth/update-profile
+#### Method: PUT
+
+Description:
+
+This endpoint allows the user to update their profile information, like their full name, email and business name. All fields are optional, only fields provided will be updated.
+
+#### Response Object
+##### Sample of a good req
+
+```JSON
+{
+    "fullName": "Biobele Johnbull",
+    "email": "cat@gmail.com",
+    "businessName": "Some Business"
+}
+```
+##### Success 
+
+```JSON
+{
+    "message": "Profile updated successfully.",
+}
+```
+
+##### Error 
+```JSON
+{
+    "error": "Error updating profile, try again later."
+}
+```
+
+
+

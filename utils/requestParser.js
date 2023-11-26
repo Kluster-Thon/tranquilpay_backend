@@ -36,7 +36,7 @@ const RESET_FORGOT_PASSWORD_RULES = [
 const CREATE_CLIENT_RULE = [
     body('fullName').notEmpty().isString().withMessage('Field is required and should be a string.'),
     body('email').notEmpty().isEmail().withMessage('Field is required and should be an email.'),
-    body('phone').notEmpty().isMobilePhone('any', { strictMode: false }).withMessage('Field is required and should be a number.'),
+    body('phone').notEmpty().isMobilePhone('any', { strictMode: false }).withMessage('Field is required and should be a mobile number.'),
 ]
 
 const CREATE_INVOICE_RULES = [

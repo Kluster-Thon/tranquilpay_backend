@@ -38,7 +38,7 @@ AuthRouter.post('/change-password', CHANGE_PASSWORD_RULES, async (req, res) => {
     }
 })
 
-AuthRouter.post('/update-profile', EDIT_USER_PROFILE, async (req, res) => {
+AuthRouter.put('/update-profile', EDIT_USER_PROFILE, async (req, res) => {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) return res.json({ errors: errors.array() })
@@ -46,9 +46,9 @@ AuthRouter.post('/update-profile', EDIT_USER_PROFILE, async (req, res) => {
     try {
         const result = await User.findOneAndUpdate({ _id: req.user.id }, { ...req.body })
 
-        if(!result) return res.status(404).json({ "error": "User not found" })
+        if(!result) return res.status(404).json({ "error": "User not found." })
 
-        res.json({ message: "Profile updated successfully" })
+        res.json({ message: "Profile updated successfully." })
 
     } catch (error) {
         ERROR(`Error updating user profile: ${error.message}`)
