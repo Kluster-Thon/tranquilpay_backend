@@ -6,7 +6,7 @@ const {
 const Product = require('../models/products');
 const User = require('../models/user');
 const ERROR = require('../utils/logger');
-const { percentageIncrease } = require('../utils/tools');
+// const { percentageIncrease } = require('../utils/tools');
 
 ProductRouter.post(
   '/create-product',
@@ -16,20 +16,20 @@ ProductRouter.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { product_name, unit_price, quantity, user_id } = req.body;
-    const productRevenue = unit_price * quantity
+    const { product_name, cost_price, selling_price, quantity, user_id } = req.body;
+    const totalSellingPrice = selling_price * quantity;
+    const totalCostPrice = cost_price * quantity;
+    const productRevenue = totalSellingPrice - totalCostPrice;
 
     const existingUser = await User.findById(user_id);
-
-    if (!existingUser) {
-      throw new Error('This user does not exist');
-    }
 
     try {
       const newProduct = await Product.create({
         product_name,
-        unit_price,
+        cost_price,
+        selling_price,
         quantity,
+        total_selling_price: totalSellingPrice,
         revenue: productRevenue,
         userId: existingUser._id,
       });
@@ -51,27 +51,29 @@ ProductRouter.post('/update-product/:product_id', CREATE_PRODUCT_RULES, async (r
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { product_name, unit_price, quantity, user_id } = req.body;
-  const productRevenue = unit_price * quantity
+  const { product_name, cost_price, selling_price, quantity, user_id } = req.body;
 
   const product_id = req.params.product_id;
-  const existingProduct = await Product.findOne({_id: product_id});
+  const totalSellingPrice = selling_price * quantity;
+    const totalCostPrice = cost_price * quantity;
+    const productRevenue = totalSellingPrice - totalCostPrice;
 
-  const existingRevenue = existingProduct.revenue;
-  const percentage_increase = percentageIncrease(
-    existingRevenue,
-    productRevenue,
-  );
+  // const existingRevenue = existingProduct.revenue;
+  // const percentage_increase = percentageIncrease(
+  //   existingRevenue,
+  //   productRevenue,
+  // );
 
   try {
     const updatedProduct = await Product.findOneAndUpdate(
       { _id: product_id, userId: user_id },
       {
         product_name,
-        unit_price,
+        cost_price,
+        selling_price,
         quantity,
+        total_selling_price: totalSellingPrice,
         revenue: productRevenue,
-        percentage_increase,
       },
       { new: true }
     );
@@ -121,9 +123,6 @@ ProductRouter.get('/product/:product_id', async (req, res) => {
   const productId = req.params.product_id;
   const userId = req.body.user_id;
 
-  if (!userId) {
-    throw new Error('This user does not exist');
-  }
 
   try {
     const product = await Product.findOne({_id: productId, userId, deleted: { $ne: true } });
@@ -147,9 +146,7 @@ ProductRouter.delete('/products/delete/:user_id', async (req, res) => {
   }
   const userId = req.params.user_id;
   const selectedProductIds = req.body.selected_ids;
-  if (!userId) {
-    throw new Error('This user does not exist');
-  }
+
   try {
     await Product.updateMany({ _id: { $in: selectedProductIds }, userId}, { deleted: true }, { new: true });
     res
@@ -171,9 +168,7 @@ ProductRouter.delete('/products/delete/:user_id', async (req, res) => {
   }
   const userId = req.params.user_id;
   const productId = req.body.product_id;
-  if (!userId) {
-    throw new Error('This user does not exist');
-  }
+
   try {
     await Product.findOneAndUpdate({ _id: productId, userId}, { deleted: true }, { new: true });
     res

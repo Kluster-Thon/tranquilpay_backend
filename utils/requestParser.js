@@ -71,7 +71,8 @@ const CREATE_INVOICE_RULES = [
 
 const CREATE_PRODUCT_RULES = [
     body('product_name').notEmpty().isString().withMessage('Field is required and should be a string.'),
-    body('unit_price').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
+    body('cost_price').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
+    body('selling_price').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
     body('quantity').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
 ]
 

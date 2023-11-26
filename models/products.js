@@ -6,7 +6,12 @@ const productSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
     },
-    unit_price: {
+    cost_price: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    selling_price: {
         type: Number,
         required: true,
         default: 0
@@ -14,6 +19,12 @@ const productSchema = new mongoose.Schema({
     quantity: {
         type: Number,
         required: true,
+        default: 1
+    },
+    total_selling_price: {
+        type: Number,
+        required: true,
+        default: 0
     },
     deleted: {
         type: Boolean,
@@ -27,11 +38,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    percentage_increase: {
-        type: Number,
-        required: true,
-        default: 1
-    }
+    // percentage_increase: {
+    //     type: Number,
+    //     required: true,
+    //     default: 1
+    // }
 }, { timestamps: true })
 
 const Product = mongoose.model('Product', productSchema)
