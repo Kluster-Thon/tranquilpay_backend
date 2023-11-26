@@ -51,4 +51,15 @@ ClientRouter.post('/create', CREATE_CLIENT_RULE, async (req, res) => {
     }
 })
 
+ClientRouter.get('/fetch-all', async (req, res) => {
+    try {
+        const { clients } = await User.findById(req.user.id).populate('clients')
+        res.json({ clients })
+        
+    } catch (error) {
+        ERROR(`Error fetching clients: ${error.message}`)
+        res.status(500).json({ error: `Error fetching clients, please try again later.` })
+    }
+})
+
 module.exports = ClientRouter

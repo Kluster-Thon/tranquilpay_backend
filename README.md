@@ -15,6 +15,7 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/invoice/fetch/:clientId](#fetch-client-invoice) - Endpoint for fetching all the transactions of a specific client.
 - [/api/auth/update-profile](#update-user-profile) - Endpoint for updating user profile.
 - [/api/clients/create](#create-client) - Endpoint for creating client.
+- [/api/clients/fetch-all](#fetch-clients) - Endpoint for fetching all clients.
 
 <a name="login"></a>
 ## /api/login
@@ -439,6 +440,39 @@ This endpoint allows the user to create a clients profile.
     "error": "Error creating client profile."
 }
 ```
+
+
+<a name="fetch-clients"></a>
+
+## /api/clients/fetch-all
+#### Method: GET
+
+Description:
+
+This endpoint allows the user to fetch all their clients.
+
+#### Response Object
+##### Success 
+
+```JSON
+{
+    "clients": [
+        {
+            "fullName": "God Damn",
+            "email": "omo@gmail.com",
+            "phone": "1412412412"
+        }
+    ],
+}
+```
+
+##### Error 
+```JSON
+{
+    "error": "Error fetching clients, try again later."
+}
+```
+
 
 
 

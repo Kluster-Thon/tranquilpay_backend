@@ -20,7 +20,7 @@ InvoiceRouter.post('/create', CREATE_INVOICE_RULES, async (req, res) => {
     })
 
     const { error } = await verifyProductAvailability(items.product_id, items.quantity)
-    if(error) return res.json({ error })
+    if(error) return res.status(400).json({ error })
 
     try {
         
