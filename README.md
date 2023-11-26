@@ -13,6 +13,7 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/invoice/get/:invoiceNumber](#fetch-single-invoice) - Endpoint for returning information about a specific invoice.
 - [/api/invoice/fetch-all](#fetch-user-invoice) - Enpoint for fetching all of a business owners invoice.
 - [/api/invoice/fetch/:clientId](#fetch-client-invoice) - Endpoint for fetching all the transactions of a specific client.
+- [/api/auth/update-profile](#update-user-profile) - Endpoint for updating user profile.
 
 <a name="login"></a>
 ## /api/login
@@ -344,6 +345,50 @@ Description:
 This endpoint returns all the invoices a client is to pay.
 
 #### Response Object
+##### Success 
+
+```bash
+{
+    "invoices": [
+        {
+        "number": "wrtvwer",
+        "status": "Unpaid | Paid |Incomplete",
+        "dueDate": "2050-10-30",
+        "clientId": "ervqerqrvqwe",
+        "totalAmount": 4000,
+        paidAmount: 3444,
+        items: [
+            {
+                "name": "Chips",
+                "quantity": 4,
+                "unitPrice": 5
+            }
+        ]
+    }
+    ]",
+}
+```
+
+
+<a name="update-user-profile"></a>
+
+## /api/auth/update-profile
+#### Method: POST
+
+Description:
+
+This endpoint allows the user to update their profile information, like their full name, email and business name. All fields are optional, only fields provided will be updated.
+
+#### Response Object
+##### Sample of a good req
+
+```bash
+{
+    "fullName": "Biobele Johnbull",
+    "email": "cat@gmail.com",
+    "businessName": "Some Business"
+}
+```
 ##### Success 
 
 ```bash
