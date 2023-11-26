@@ -45,7 +45,7 @@ ClientRouter.post('/create', CREATE_CLIENT_RULE, async (req, res) => {
     } catch (error) {
         await Client.deleteOne({ email })
         
-        ERROR('Error creating client:', error.message);
+        ERROR('Error creating client profile:', error.message);
 
         res.status(500).json({ error: 'Error creating client. Try again later.' });
     }
