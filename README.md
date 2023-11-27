@@ -16,7 +16,7 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/auth/update-profile](#update-user-profile) - Endpoint for updating user profile.
 - [/api/clients/create](#create-client) - Endpoint for creating client.
 - [/api/clients/fetch-all](#fetch-clients) - Endpoint for fetching all clients.
-- [/api/create-checkout-session](#stripe-checkout) - Endpoint for connecting to stripe.
+- [/api/stripe/create-checkout-session](#stripe-checkout) - Endpoint for connecting to stripe.
 
 <a name="login"></a>
 
