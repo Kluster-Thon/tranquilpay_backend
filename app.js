@@ -20,6 +20,7 @@ const ClientRouter = require('./controllers/clients')
 const InvoiceRouter = require('./controllers/invoice')
 const ProductRouter = require('./controllers/products')
 const WebhookRouter = require('./controllers/webhook')
+const StripeRouter = require('./controllers/gateway/stripe')
 mongoose.set("bufferTimeoutMS", 20000)
 
 mongoose.set("strictQuery", false)
@@ -43,6 +44,7 @@ app.use('/api/clients', authMiddleware, ClientRouter)
 app.use('/api/invoice', authMiddleware, InvoiceRouter)
 app.use('/api/products', authMiddleware, ProductRouter)
 app.use('/api/webhook', flutterwaveWebhookMiddleware, WebhookRouter)
+app.use('/api/stripe/create-checkout-session', authMiddleware, StripeRouter)
 
 
 app.use(errorHandler) 

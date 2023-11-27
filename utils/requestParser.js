@@ -80,6 +80,32 @@ const CREATE_PRODUCT_RULES = [
     body('quantity').notEmpty().isNumeric().withMessage('Field is required and should be a number.'),
 ]
 
+const STRIPE_CHECKOUT_RULES = [
+    body('clientId')
+        .exists()
+        .withMessage('Client is required.')
+        .isString()
+        .withMessage('Client id should be a string.'),
+    body('products')
+        .exists()
+        .withMessage('Product is required.')
+        .bail()
+        .isArray()
+        .withMessage('Product should be an array.')
+        .bail()
+        .custom(items => {
+            for (const item of items) {
+                if (!item.product_id || typeof item.product_id !== 'string') {
+                    throw new Error('Invalid product id.')
+                }
+
+                if (!item.quantity || typeof item.quantity !== 'number'){
+                    throw new Error('Invalid item quantity.')
+                }
+            }
+        })
+]
+
 const getUserFrom = async (req) => {
     const auth = req ? req.headers.authorization : null
 
@@ -101,5 +127,6 @@ module.exports = {
     LOGIN_USER_RULES,
     EDIT_USER_PROFILE,
     CREATE_INVOICE_RULES,
-    CREATE_PRODUCT_RULES
+    CREATE_PRODUCT_RULES,
+    STRIPE_CHECKOUT_RULES
 }

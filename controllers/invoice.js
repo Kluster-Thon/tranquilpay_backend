@@ -45,7 +45,7 @@ InvoiceRouter.post('/create', CREATE_INVOICE_RULES, async (req, res) => {
         ERROR(`Error creating invoice: ${error.message}`)
 
         res.status(500).json({
-            error: `Error creating invoice: ${error.message}`
+            error: `Error creating invoice, try again later.`
         })
     }
 

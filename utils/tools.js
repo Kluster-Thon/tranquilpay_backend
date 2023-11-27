@@ -76,18 +76,18 @@ const verifyProductAvailability = async (product_id, amount) => {
     
         if (!product) {
             ERROR(`Product not found.`)
-            return { error: "Product not found" }
+            return { error: "Product not found", status: 400 }
         }
     
         if (amount > product.quantity) {
             ERROR(`Requested amount greater than product stock, reduce amount requested.`)
-            return { error: "Requested amount greater than product stock, reduce amount requested." }
+            return { error: "Requested amount greater than product stock, reduce amount requested.", status: 400 }
         }
 
         return { success: true }
     } catch (error) {
         ERROR(`Error verifying product availability; ${error.message}`)
-        return { error: `Error verifying product availability; ${error.message}` }
+        return { error: `Error verifying product availability; ${error.message}`, status: 500 }
     }
 }
 

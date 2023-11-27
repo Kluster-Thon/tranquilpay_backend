@@ -16,6 +16,7 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/auth/update-profile](#update-user-profile) - Endpoint for updating user profile.
 - [/api/clients/create](#create-client) - Endpoint for creating client.
 - [/api/clients/fetch-all](#fetch-clients) - Endpoint for fetching all clients.
+- [/api/create-checkout-session](#stripe-checkout) - Endpoint for connecting to stripe.
 
 <a name="login"></a>
 
@@ -472,6 +473,60 @@ This endpoint allows the user to fetch all their clients.
 ```JSON
 {
     "error": "Error fetching clients, try again later."
+}
+```
+
+
+<a name="stripe-checkout"></a>
+
+## /api/create-checkout-session
+#### Method: POST
+
+Description:
+
+This endpoint connects to stripe, creates an invoice and sends it to the customers.
+
+#### Response Object
+##### Sample of a good request
+```JSON
+{
+    "products": [
+        {
+            "id": "245fw4t24f4tgf34tg", //MongoDB Product ID
+            "name": "omo@gmail.com",
+            "quantity": 2
+        }
+    ],
+}
+```
+
+##### Success 
+
+```JSON
+{
+    "message": "Invoice sent successfully",
+    "createdInvoice": {
+        "number": "rvvwer3413",
+        "dueDate": "2040-05-30",
+        "userId": "241f3f3134f13",
+        "clientId": "34f3f3f3f3f",
+        "totalAmount": 134,
+        "items": [
+            {
+                "id": "245fw4t24f4tgf34tg", //MongoDB Product ID
+                "name": "omo@gmail.com",
+                "quantity": 2
+            }
+        ],
+    },
+    "sessionId": "34134f134f13f"
+}
+```
+
+##### Error 
+```JSON
+{
+    "error": "Error creating invoice, try again later."
 }
 ```
 
