@@ -1,4 +1,6 @@
+const { default: mongoose } = require('mongoose')
 const Client = require('../../models/clients')
+const Invoice = require('../../models/invoice')
 const { sendInvoiceTo } = require('../../utils/emails')
 const { ERROR } = require('../../utils/logger')
 const { STRIPE_CHECKOUT_RULES, validationResult } = require('../../utils/requestParser')
@@ -13,23 +15,34 @@ StripeRouter.post('/create-checkout-session', STRIPE_CHECKOUT_RULES, async (req,
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.json({ errors: errors.array() })
     
-    const { products, clientId } = req.body
+    const { productsToBuy, clientId } = req.body
 
     const client = await Client.findById(clientId)
-    if(!client) return res.json({ error: "Client not found, consider creating one first." })
-
-    const { error, status } = await verifyProductAvailability(products.product_id, products.quantity)
-    if (error) return res.status(status).json({ error })
+    if (!client) return res.json({ error: "Client not found, consider adding them first." })
     
-    const line_items = products.map((prod) => ({
+    const availableProducts = await Promise.all(productsToBuy.map(async (item) => {
+        const { error, status, product } = await verifyProductAvailability(item.product_id, item.quantity)
+        if (error) return res.status(status).json({ error })
+        
+        return product
+    }))
+    
+    const line_items = availableProducts.map((product) => ({
         price_data: {
             currency: "NGN",
             product_data: {
-                name: prod.product_name,
+                name: product.product_name,
             },
-            unit_amount: Math.round(prod.price * 100)
+            unit_amount: Math.round(product.cost_price / product.quantity)
         },
-        quantity: products.quantity
+        quantity: product.quantityForPurchase
+    }))
+
+    const items = availableProducts.map(item => ({
+        product_id: item.id,
+        name: item.product_name,
+        quantity: item.quantityForPurchase,
+        unitPrice: Math.round(product.cost_price / product.quantity),
     }))
 
     const session = await stripe.checkout.sessions.create({
@@ -41,10 +54,9 @@ StripeRouter.post('/create-checkout-session', STRIPE_CHECKOUT_RULES, async (req,
     })
 
     try {
-        
+
         const newInvoice = new Invoice({
             number: await createTransactionUUID(),
-            dueDate,
             userId: req.user.id,
             clientId: clientExists._id,
             totalAmount,

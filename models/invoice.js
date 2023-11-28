@@ -12,16 +12,6 @@ const invoiceSchema = new mongoose.Schema({
         required: true,
         default: "Unpaid"
     },
-    dueDate: {
-        type: Date,
-        required: true,
-        validate: {
-            validator: function (value) {
-                return value > new Date(); // Check if dueDate is in the future
-            },
-            message: 'Due date must be in the future.'
-        }
-    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -41,9 +31,13 @@ const invoiceSchema = new mongoose.Schema({
     },
     items: [
         {
+            "product_id": {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product'
+            },
             "name": String,
             "quantity": Number,
-            "unitPrice": Number,
+            "unitPrice": Number
         }
     ],
     createdAt: {

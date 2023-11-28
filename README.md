@@ -9,7 +9,6 @@ This is the backend repo of the Klusterthon Hackathon project, Tranquil Pay.
 - [/api/user/verify/:token](#verify-email) - Verify email on account creation endpoint.
 - [/api/user/forgot-password](#forgot-password) - Forgot password endpoint.
 - [/api/user/reset-password](#reset-password-post) - Post endpoint for resetting password.
-- [/api/invoice/create](#invoice-create) - Endpoint for creating an invoice.
 - [/api/invoice/get/:invoiceNumber](#fetch-single-invoice) - Endpoint for returning information about a specific invoice.
 - [/api/invoice/fetch-all](#fetch-user-invoice) - Enpoint for fetching all of a business owners invoice.
 - [/api/invoice/fetch/:clientId](#fetch-client-invoice) - Endpoint for fetching all the transactions of a specific client.
@@ -288,7 +287,7 @@ This endpoint returns information about a single invoice.
 {
     "invoice": {
         "number": "wrtvwer",
-        "status": "Unpaid | Paid |Incomplete",
+        "status": "Unpaid | Paid | Incomplete| Cancelled",
         "dueDate": "2050-10-30",
         "clientId": "ervqerqrvqwe",
         "totalAmount": 4000,

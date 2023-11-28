@@ -34,10 +34,6 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    unit_price: {
-        type: Number,
-        required: true
-    }
     // percentage_increase: {
     //     type: Number,
     //     required: true,
